@@ -212,6 +212,8 @@ def stream_qa_updates(query: str):
             logger.info("Generated response:")
             logger.info(node_state.get("response", ""))
 
+    return node_state.get("response", "")
+
 
 if __name__ == "__main__":
     import sys
