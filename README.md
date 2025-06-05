@@ -1,94 +1,122 @@
-# arxiv_rag
+# arXiv RAG
 
-Um sistema RAG (Retrieval-Augmented Generation) para pesquisa científica, que utiliza artigos do arXiv como base de conhecimento, Qdrant como vector store e LangGraph para orquestração do fluxo.
+A Retrieval-Augmented Generation (RAG) system for answering questions about research topics, using arXiv articles as a knowledge base, Qdrant as a vector store, and LangGraph for pipeline orchestration.
 
-## Descrição
+## Description
 
-Este projeto permite buscar, indexar e consultar artigos científicos do arXiv para responder perguntas sobre temas de pesquisa, combinando busca semântica (OpenAI Embeddings + Qdrant) e geração de respostas com LLMs. O fluxo é orquestrado com LangGraph, permitindo estratégias adaptativas e corretivas de RAG.
+This project enables searching, indexing, and querying scientific articles from arXiv to answer research questions, combining semantic search (OpenAI Embeddings + Qdrant) and answer generation with LLMs. The flow is orchestrated with LangGraph, allowing adaptive and corrective RAG strategies.
 
-## Funcionalidades
+## Features
 
-- Download automático de artigos do arXiv por tema
-- Extração de texto de PDFs
-- Chunking e geração de embeddings via OpenAI
-- Indexação e busca semântica com Qdrant
-- Orquestração do pipeline RAG com LangGraph
-- Interface web (Streamlit) para interação
+- Automatic download of arXiv articles by topic
+- PDF text extraction
+- Chunking and embedding generation via OpenAI
+- Semantic indexing and search with Qdrant
+- RAG pipeline orchestration with LangGraph
+- Web interface (Streamlit) for interaction
 
-## Estrutura do Projeto
+## Project Structure
 
 ```
 arxiv_rag/
 │
-├── data/                        # PDFs e textos baixados
+├── data/                        # Downloaded PDFs and texts
 ├── src/
-│   ├── arxiv_downloader.py      # Download de artigos do arXiv
-│   ├── pdf_extractor.py         # Extração de texto dos PDFs
-│   ├── chunker.py               # Divisão do texto em chunks
-│   ├── embedder.py              # Geração de embeddings (OpenAI)
-│   ├── vectorstore.py           # Integração com Qdrant
-│   ├── rag_graph.py             # Orquestração do fluxo RAG com LangGraph
-│   └── interface.py             # Interface CLI ou web
+│   ├── arxiv_downloader.py      # arXiv article downloader
+│   ├── pdf_extractor.py         # PDF text extraction
+│   ├── chunker.py               # Text chunking
+│   ├── embedder.py              # Embedding generation (OpenAI)
+│   ├── vectorstore.py           # Qdrant integration
+│   ├── rag_graph.py             # RAG flow orchestration with LangGraph
+│   └── interface.py             # CLI or web interface
 │
-├── docker-compose.yml           # Para subir o Qdrant
+├── docker-compose.yml           # Docker Compose for app and Qdrant
+├── Dockerfile                   # FastAPI app Dockerfile
 ├── README.md
 ```
 
-## Como rodar o projeto
+## How to Run the Project
 
-### 1. Clone o repositório
+### 1. Clone the repository
 
 ```bash
-git clone https://github.com/seu-usuario/arxiv_rag.git
+git clone https://github.com/your-username/arxiv_rag.git
 cd arxiv_rag
 ```
 
-### 2. Crie o arquivo `.env`
+### 2. Create the `.env` file
 
 ```env
-OPENAI_API_KEY=coloque_sua_chave_aqui
-QDRANT_HOST=localhost
+OPENAI_API_KEY=your_openai_key_here
+QDRANT_HOST=qdrant
 QDRANT_PORT=6333
 ```
 
-### 3. Suba o Qdrant
+### 3. Start the services with Docker Compose
 
 ```bash
-docker-compose up -d
+docker-compose up --build
 ```
 
-### 4. Instale as dependências
+- The FastAPI app will be available at: http://localhost:8000/docs
+- Qdrant will be available at: http://localhost:6333
 
-```bash
-uv venv
-source .venv/bin/activate
-uv init
-uv pip install -r requirements.txt  # ou use uv add ... para instalar as dependências
+
+## API Usage
+
+After starting the services with Docker Compose, you can access the API documentation at [http://localhost:8000/docs](http://localhost:8000/docs).
+
+### Available Endpoints
+
+#### 1. Ingest Articles
+Adds new articles to the knowledge base.
+
+**Request:**
+```
+POST /ingest
+Content-Type: application/json
+
+{
+    "query": "quantum computing"
+}
 ```
 
-### 5. Execute a interface
+#### 2. Answer Questions
+Query the knowledge base with questions about the indexed articles.
 
-```bash
-streamlit run src/interface.py
+**Request:**
+```
+POST /answer
+Content-Type: application/json
+
+{
+    "query": "What are the latest advances in quantum computing?"
+}
 ```
 
-## Tecnologias utilizadas
+**Response:**
+```json
+{
+    "response": "Based on the indexed articles..."
+}
+```
 
-- [LangChain](https://python.langchain.com/)
-- [LangGraph](https://langchain-ai.github.io/langgraph/)
-- [Qdrant](https://qdrant.tech/)
-- [OpenAI API](https://platform.openai.com/)
-- [arXiv API](https://arxiv.org/help/api/)
-- [Streamlit](https://streamlit.io/)
 
-## Créditos
+## Technologies Used
 
-Inspirado em tutoriais e exemplos oficiais de LangGraph, Qdrant e OpenAI.
+- [FastAPI](https://fastapi.tiangolo.com/) — API framework
+- [LangChain](https://python.langchain.com/) — LLM orchestration
+- [LangGraph](https://langchain-ai.github.io/langgraph/) — RAG pipeline orchestration
+- [Qdrant](https://qdrant.tech/) — Vector database
+- [OpenAI API](https://platform.openai.com/) — Embeddings and LLMs
+- [arXiv API](https://arxiv.org/help/api/) — Scientific articles
+- [Streamlit](https://streamlit.io/) — Web interface
+- [uv](https://github.com/astral-sh/uv) — Python dependency manager
 
-## Licença
+## Credits
 
-Este projeto está sob a licença MIT.
+Inspired by official tutorials and examples from LangGraph, Qdrant, and OpenAI.
 
----
+## License
 
-> Dicas de boas práticas para README: [Make a README](https://www.makeareadme.com/) | [freeCodeCamp: How to Write a Good README File](https://www.freecodecamp.org/news/how-to-write-a-good-readme-file/)
+This project is licensed under the MIT License.
