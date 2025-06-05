@@ -1,4 +1,22 @@
+version: '3.8'
+
 services:
+  app:
+    build: .
+    container_name: arxiv_rag_app
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONPATH=/app
+      - QDRANT_URL=http://qdrant:6333
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - ./src:/app/src
+      - ./data:/app/data
+    depends_on:
+      - qdrant
+
   qdrant:
     image: qdrant/qdrant:latest
     container_name: qdrant
@@ -7,4 +25,4 @@ services:
       - "6333:6333"
       - "6334:6334"
     volumes:
-      - ./qdrant_data:/qdrant/storage 
+      - ./qdrant_data:/qdrant/storage
