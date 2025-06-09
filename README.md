@@ -71,6 +71,9 @@ After starting the services with Docker Compose, you can access the API document
 ### Available Endpoints
 
 #### 1. Ingest Articles
+
+![51ea8b8d-a1d1-4941-bfc9-d8f8a24c7f63](https://github.com/user-attachments/assets/65ee5b59-3ad9-4766-a3e6-dceedaecc7e5)
+
 Adds new articles to the knowledge base.
 
 **Request:**
@@ -84,6 +87,9 @@ Content-Type: application/json
 ```
 
 #### 2. Answer Questions
+
+![320dbbd0-edbd-4ac9-bc72-2ec4da108328](https://github.com/user-attachments/assets/dcd2f96a-bb3c-469a-b7bc-2e8dc97ea562)
+
 Query the knowledge base with questions about the indexed articles.
 
 **Request:**
