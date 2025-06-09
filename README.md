@@ -13,7 +13,9 @@ This project enables searching, indexing, and querying scientific articles from 
 - Chunking and embedding generation via OpenAI
 - Semantic indexing and search with Qdrant
 - RAG pipeline orchestration with LangGraph
-- Web interface (Streamlit) for interaction
+- Question answering via FastAPI interface
+- Dockerized deployment with Docker Compose
+
 
 ## Project Structure
 
@@ -110,7 +112,6 @@ Content-Type: application/json
 - [Qdrant](https://qdrant.tech/) — Vector database
 - [OpenAI API](https://platform.openai.com/) — Embeddings and LLMs
 - [arXiv API](https://arxiv.org/help/api/) — Scientific articles
-- [Streamlit](https://streamlit.io/) — Web interface
 - [uv](https://github.com/astral-sh/uv) — Python dependency manager
 
 ## Credits
